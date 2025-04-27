@@ -1,8 +1,9 @@
 import express from "express";
 import cors from "cors";
-import { connectDB } from "./configs/mongodb.js";
-import { config } from "dotenv";
-import eudcatorRouter from "./routes/educatorRoutes.js";
+import { PORT, MONGODB_URI } from "./configs/env.js";
+import authRouter from "./routes/auth.routes.js";
+import userRouter from "./routes/user.routes.js";
+import connectToDatabase from "./database/mongodb.js";
 
 //initializing Express
 const app = express();
@@ -12,20 +13,16 @@ app.use(cors());
 app.use(express.json()); //for parsing JSON body
 
 //connect mongodb
-await connectDB();
+
 
 //Routes
 app.get("/", (req, res) => {
   res.send("API working");
 });
-app.use('/api/educator',eudcatorRouter)
-app.use('api/users',userRoutes)
+app.use("api/v1/auth", authRouter);
+app.use("api/v1/users", userRouter);
 
-
-
-//Port
-const PORT = process.env.PORT || 5000;
-
-app.listen(PORT, () => {
-  console.log(`Server is running on port`, PORT);
+app.listen(PORT, async() => {
+  console.log(`Server is running on http://localhost:${PORT}`);
+  await connectToDatabase()
 });

@@ -17,7 +17,7 @@ app.use(express.json()); //for parsing JSON body
 
 //Routes
 app.get("/", (req, res) => {
-  res.send("API working");
+  res.send(`API working Perfectly. Time: ${new Date().toLocaleDateString()}`);
 });
 app.use("api/v1/auth", authRouter);
 app.use("api/v1/users", userRouter);

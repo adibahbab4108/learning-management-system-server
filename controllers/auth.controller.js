@@ -1,6 +1,10 @@
-import User from "../models/user.model";
+import mongoose from "mongoose";
+import User from "../models/user.model.js";
 
-export const registerUser = async (req, res) => {
+export const signUp = async (req, res, next) => {
+  //to ensure atomicity
+  // const session = await mongoose.startSession();
+  // session.startTransaction();
   try {
     const { firstName, lastName, email, photoURL, creationTime } = req.body;
 
@@ -36,4 +40,12 @@ export const registerUser = async (req, res) => {
     console.error(error);
     res.status(500).json({ message: "Server error while registering user." });
   }
+};
+export const signIn = async (req, res, next) => {
+  try {
+  } catch (error) {}
+};
+export const signOut = async (req, res, next) => {
+  try {
+  } catch (error) {}
 };

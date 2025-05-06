@@ -34,4 +34,6 @@ export const createUser = async (req, res) => {
   }
 };
 export const updateRoleToEducator = (req, res) => {
+  const { email } = req.params;
+  res.json({status:true, message:"Updated to Educator!"})
 };

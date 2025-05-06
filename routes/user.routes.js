@@ -6,7 +6,7 @@ userRouter.get("/", (req, res) => res.send({ title: "GET all users" }));
 userRouter.get("/:id", (req, res) => res.send({ title: "GET user details" }));
 userRouter.post("/google-login", createUser);
 userRouter.put("/:id", (req, res) => res.send({ title: "Update user by ID" }));
-userRouter.put("/update-user/:email",updateRoleToEducator);
+userRouter.patch("/:email/update-role",updateRoleToEducator);
 userRouter.delete("/:id", (req, res) => res.send({ title: "Delete users" }));
 
 export default userRouter;

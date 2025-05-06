@@ -1,6 +1,9 @@
 import mongoose from "mongoose";
 import User from "../models/user.model.js";
 
+
+//..................................NOT IN USE................................
+
 export const signUp = async (req, res, next) => {
   //to ensure atomicity
   // const session = await mongoose.startSession();

@@ -14,8 +14,6 @@ app.use(cors());
 app.use(express.json()); //for parsing JSON body
 // app.use(errorMiddleware());
 
-//connect mongodb
-
 //Routes
 app.get("/", (req, res) => {
   res.send(`API working Perfectly. Time: ${new Date().toISOString()}`);

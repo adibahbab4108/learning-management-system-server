@@ -27,11 +27,11 @@ export const createUser = async (req, res) => {
       .json({ success: true, message: "User registered successfully." });
   } catch (error) {
     console.error(error);
-    res
-      .status(500)
-      .json({
-        success: false,
-        message: "Server error while registering user.",
-      });
+    res.status(500).json({
+      success: false,
+      message: "Server error while registering user.",
+    });
   }
+};
+export const updateRoleToEducator = (req, res) => {
 };

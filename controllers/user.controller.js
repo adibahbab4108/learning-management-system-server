@@ -33,7 +33,51 @@ export const createUser = async (req, res) => {
     });
   }
 };
-export const updateRoleToEducator = (req, res) => {
-  const { email } = req.params;
-  res.json({status:true, message:"Updated to Educator!"})
+
+export const getUserDetails = async (req, res) => {
+  try {
+    const { email } = req.params;
+    const userDetails = await User.findOne({ email });
+
+    if (!userDetails) {
+      return res
+        .status(404)
+        .json({ success: false, message: "User not found" });
+    }
+
+    res.status(200).json({ success: true, data: userDetails });
+  } catch (error) {
+    console.error("Error fetching user details:", error);
+    res.status(500).json({ success: false, message: "Internal server error" });
+  }
+};
+
+export const updateRoleToEducator = async (req, res) => {
+  try {
+    const { email } = req.params;
+    console.log(email);
+    const updatedUser = await User.findOneAndUpdate(
+      { email },
+      { role: "educator" },
+      { new: true } // Returns the updated document
+    );
+
+    if (!updatedUser) {
+      return res
+        .status(404)
+        .json({ success: false, message: "User not found" });
+    }
+
+    res.json({
+      success: true,
+      message: "Updated to Educator!",
+      user: updatedUser,
+    });
+  } catch (error) {
+    res.status(500).json({
+      success: false,
+      message: "Internal server error",
+      error: error.message,
+    });
+  }
 };

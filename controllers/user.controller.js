@@ -38,7 +38,6 @@ export const getUserDetails = async (req, res) => {
   try {
     const { email } = req.params;
     const userDetails = await User.findOne({ email });
-
     if (!userDetails) {
       return res
         .status(404)

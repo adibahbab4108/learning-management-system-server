@@ -1,16 +1,16 @@
-import Course from "../models/course.model";
+import Course from "../models/course.model.js";
 
 //Add New Course
 export const addCourse = async (req, res) => {
   try {
-    const { courseData } = req.body;
-    const imageFile = req.file;
-    const educatorId = "x";
-    if (!imageFile) {
-      return res.json({ success: false, message: "Thumbnail Not Attached" });
-    }
-    const parsedCourseData = await JSON.parse(courseData);
-    parsedCourseData.educator = educatorId;
-    const newCourse = await Course.create(parsedCourseData);
-  } catch (error) {}
+    const courseData  = req.body;
+    console.log(courseData);
+    // const educatorEmail = req.params;
+    res.json({ success: true, message: "API kaj kortese" });
+    // const parsedCourseData = await JSON.parse(courseData);
+    // parsedCourseData.educator = educatorEmail;
+    // const newCourse = await Course.create(parsedCourseData);
+  } catch (error) {
+    return res.json({ success: false, message: error.message });
+  }
 };

@@ -9,7 +9,6 @@ const lectureSchema = new mongoose.Schema(
     isPreviewFree: { type: String, required: true },
     lectureOrder: { type: Number, required: true },
   },
-  { _id: false }
 );
 
 const chapterSchema = new mongoose.Schema({

@@ -1,8 +1,9 @@
 import { Router } from "express";
-import { addCourse } from "../controllers/educator.controller.js";
+import { addCourse, getEducatorCourses,  } from "../controllers/educator.controller.js";
 
 const educatorRouter = Router();
 
 educatorRouter.post("/add-course", addCourse);
+educatorRouter.get("/courses",getEducatorCourses)
 
 export default educatorRouter

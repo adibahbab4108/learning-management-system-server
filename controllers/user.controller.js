@@ -1,26 +1,28 @@
 import User from "../models/user.model.js";
 
 export const createUser = async (req, res) => {
+  const { uid, name, email, picture } = req.user;
+  console.log(name, email);
   try {
-    const { uid, fullName, email, photoURL, role, creationTime } = req.body;
-
     // Check if user already exists
     const existingUser = await User.findOne({ email });
 
-    if (existingUser) {
-      return res.status(409).json({ message: "User already exists." });
-    }
-
-    //METHOD 2
     const NewUser = {
       _id: uid,
-      name: fullName,
+      name,
       email,
-      imageUrl: photoURL,
-      role,
-      creationTime,
+      imageUrl: picture,
     };
-    await User.create(NewUser);
+
+    if (!existingUser) {
+      await User.create(NewUser);
+    }
+
+    res.cookie("token", req.token, {
+      httpOnly: true,
+      secure: false,
+      maxAge: 60 * 60 * 1000,
+    });
 
     res
       .status(201)

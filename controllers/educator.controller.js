@@ -41,7 +41,7 @@ export const addCourse = async (req, res) => {
 
 export const getEducatorCourses = async (req, res) => {
   try {
-    const { email } = req.query; // replace with jwt leter
+    const { email } = req.user;
     const courses = await Course.find({ educator: email });
     res.json({ success: true, courses });
   } catch (error) {
@@ -51,6 +51,7 @@ export const getEducatorCourses = async (req, res) => {
 export const educatorDashboardData = async (req, res) => {
   try {
     const { email } = req.query; // replace with jwt leter
+    console.log(email);
     const courses = await Course.find({ educator: email });
     const totalCourses = courses.length;
     const courseIds = courses.map((course) => course._id);
@@ -98,6 +99,23 @@ export const educatorDashboardData = async (req, res) => {
 //Get enrolled Students Data with Purchase Data
 export const getEnrolledStudentsData = async (req, res) => {
   try {
-    
+    const { email } = req.user;
+    const courses = await Course.find({ educator: email });
+    const courseIds = courses.map((course) => course._id);
+
+    const purchases = await Purchase.find({
+      courseId: { $in: courseIds },
+      status: "completed",
+    })
+      .populate("userId", "name imageUrl")
+      .populate("courseId", "courseTitle");
+
+    const enrolledStudents = purchases.map((purchase) => ({
+      student: purchase.userId,
+      courseTitle: purchase.courseId.courseTitle,
+      purchase: purchase.createdAt,
+    }));
+
+    res.json({ success: true, enrolledStudents });
   } catch (error) {}
 };

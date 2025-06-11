@@ -7,6 +7,8 @@ import userRouter from "./routes/user.routes.js";
 import connectToDatabase from "./database/mongodb.js";
 import errorMiddleware from "./middlewares/error.middleware.js";
 import educatorRouter from "./routes/educator.routes.js";
+import courseRouter from "./routes/course.route.js";
+import { stripeWebhooks } from "./controllers/webhooks.controller.js";
 
 //initializing Express
 const app = express();
@@ -29,6 +31,9 @@ app.get("/", (req, res) => {
 app.use("/api/v1/auth", authRouter);
 app.use("/api/v1/users", userRouter);
 app.use("/api/v1/educator", educatorRouter);
+app.use("/api/v1/course", courseRouter);
+
+app.post("/stripe", express.raw({ type: "application/json" }), stripeWebhooks);
 
 //handling Route not found
 app.use((req, res, next) => {

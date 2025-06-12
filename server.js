@@ -33,7 +33,7 @@ app.get("/", (req, res) => {
   res.send(`API working Perfectly. Time: ${new Date().toISOString()}`);
 });
 app.use("/api/v1/auth", authRouter);
-app.use("/api/v1/users", userRouter);
+app.use("/api/v1/user", userRouter);
 app.use("/api/v1/educator", educatorRouter);
 app.use("/api/v1/course", courseRouter);
 

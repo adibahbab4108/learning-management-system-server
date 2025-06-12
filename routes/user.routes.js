@@ -1,5 +1,6 @@
 import { Router } from "express";
 import {
+  addUserRating,
   createUser,
   getUserCourseProgress,
   getUserDetails,
@@ -11,7 +12,7 @@ import {
 import { verifyFirebaseToken } from "../middlewares/verifyFirebaseToken.js";
 const userRouter = Router();
 
-// /api/v1/users
+// /api/v1/user
 userRouter.get("/", (req, res) => res.send({ title: "GET all users" }));
 userRouter.post("/google-login", verifyFirebaseToken, createUser);
 userRouter.get("/user-details", verifyFirebaseToken, getUserDetails);
@@ -27,6 +28,7 @@ userRouter.post(
   verifyFirebaseToken,
   getUserCourseProgress
 );
+userRouter.post("/add-rating", verifyFirebaseToken, addUserRating);
 
 userRouter.put("/:id", (req, res) => res.send({ title: "Update user by ID" }));
 userRouter.patch("/:email/update-role", updateRoleToEducator);

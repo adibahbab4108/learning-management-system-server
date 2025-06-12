@@ -8,7 +8,6 @@ export const getAllCourse = async (req, res) => {
       { $project: { courseContent: 0, enrolledStudents: 0 } },
       //issue: educator reference is needed to show along with course, work later
     ]);
-    console.log(courses);
     res.json({ success: true, courses });
   } catch (error) {
     res.json({ success: false, message: error.message });

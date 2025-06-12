@@ -22,7 +22,7 @@ app.use(
 );
 
 // Place the /stripe route before express.json() to work seperately. otherwise a conflict occu with express.json() middleware
-app.post("/stripe", express.raw({ type: "application/json" }), stripeWebhooks);
+app.post("/stripe", express.raw({ type: "application/json" }), stripeWebhooks); // this endpoint automatically hit by stripe after purchase
 
 app.use(express.json()); //for parsing JSON body
 app.use(cookieParser()); // automatically set req.cookies and accessible to eevry req

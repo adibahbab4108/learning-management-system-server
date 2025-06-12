@@ -84,7 +84,6 @@ export const getUserDetails = async (req, res) => {
 export const userEnrolledCourses = async (req, res) => {
   try {
     const { uid } = req.user;
-    console.log(uid);
     const user = await User.findById(uid).populate("enrolledCourses");
     res.json({ success: true, enrolledCourses: user.enrolledCourses });
   } catch (error) {
@@ -100,7 +99,6 @@ export const purchaseCourse = async (req, res) => {
     const { uid } = req.user;
     const userData = await User.findById(uid);
     const courseData = await Course.findById(courseId);
-    console.log(userData, courseData);
 
     if (!userData || !courseData)
       return res.json({ success: false, message: "Data Not Found" });

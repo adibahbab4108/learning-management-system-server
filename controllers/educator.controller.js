@@ -51,7 +51,6 @@ export const getEducatorCourses = async (req, res) => {
 export const educatorDashboardData = async (req, res) => {
   try {
     const { email } = req.query; // replace with jwt leter
-    console.log(email);
     const courses = await Course.find({ educator: email });
     const totalCourses = courses.length;
     const courseIds = courses.map((course) => course._id);

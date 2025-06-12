@@ -14,7 +14,7 @@ userRouter.get("/", (req, res) => res.send({ title: "GET all users" }));
 userRouter.post("/google-login", verifyFirebaseToken, createUser);
 userRouter.get("/user-details", verifyFirebaseToken, getUserDetails);
 userRouter.get("/enrolled-courses", verifyFirebaseToken, userEnrolledCourses);
-userRouter.post("/purchase",verifyFirebaseToken, purchaseCourse);
+userRouter.post("/purchase", verifyFirebaseToken, purchaseCourse);
 
 userRouter.put("/:id", (req, res) => res.send({ title: "Update user by ID" }));
 userRouter.patch("/:email/update-role", updateRoleToEducator);

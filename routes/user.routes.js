@@ -29,9 +29,9 @@ userRouter.post(
   getUserCourseProgress
 );
 userRouter.post("/add-rating", verifyFirebaseToken, addUserRating);
+userRouter.patch("/update-role", verifyFirebaseToken, updateRoleToEducator);
 
 userRouter.put("/:id", (req, res) => res.send({ title: "Update user by ID" }));
-userRouter.patch("/:email/update-role", updateRoleToEducator);
 userRouter.delete("/:id", (req, res) => res.send({ title: "Delete users" }));
 
 export default userRouter;

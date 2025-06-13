@@ -6,9 +6,22 @@ import { courseProgres } from "../models/courseProgress.model.js";
 
 export const createUser = async (req, res) => {
   const { uid, name, email, picture } = req.user;
+
+  res.cookie("token", req.token, {
+    httpOnly: true,
+    secure: process.env.NODE_ENV === "production",
+    maxAge: 24 * 60 * 60 * 1000, //need to login again after 1 day
+  });
+  
   try {
     // Check if user already exists
     const existingUser = await User.findOne({ email });
+    if (existingUser) {
+      return res.json({
+        success: true,
+        message: "user already exists. continue with previous data ",
+      });
+    }
 
     const NewUser = {
       _id: uid,
@@ -17,15 +30,9 @@ export const createUser = async (req, res) => {
       imageUrl: picture,
     };
 
-    if (!existingUser) {
-      await User.create(NewUser);
-    }
+    await User.create(NewUser);
 
-    res.cookie("token", req.token, {
-      httpOnly: true,
-      secure: false,
-      maxAge: 60 * 60 * 1000,
-    });
+    console.log(email, "\n", req.token);
 
     res
       .status(201)
@@ -40,11 +47,14 @@ export const createUser = async (req, res) => {
 };
 export const updateRoleToEducator = async (req, res) => {
   try {
-    const { email } = req.params;
+    const { email } = req.user;
+    const { role } = req.body;
+
+    console.log(email, role);
 
     const updatedUser = await User.findOneAndUpdate(
       { email },
-      { role: "educator" },
+      { role },
       { new: true } // Returns the updated document
     );
 

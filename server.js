@@ -42,10 +42,6 @@ app.use((req, res, next) => {
   res.status(404).json({ message: "Route not found" });
 });
 
-// app.listen(PORT, async () => {
-//   console.log(`Server is running on http://localhost:${PORT}`);
-//   await connectToDatabase();
-// });
 
 if (process.env.NODE_ENV !== "production") {
   connectToDatabase().then(() => {

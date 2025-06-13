@@ -4,16 +4,17 @@ import User from "../models/user.model.js";
 
 //Add New Course
 export const addCourse = async (req, res) => {
-  try {
-    const {
-      courseTitle,
-      descriptionHTML,
-      courseThumbnail,
-      coursePrice,
-      discount,
-      userEmail, // educator email or ID // replace with jwt leter
-    } = req.body;
+  const {
+    courseTitle,
+    descriptionHTML,
+    courseThumbnail,
+    coursePrice,
+    discount,
+  } = req.body;
 
+  const { uid, name, email } = req.user;
+
+  try {
     // Create a new course instance.
     // We use this way if we need to
     // modify the fieldname
@@ -23,7 +24,7 @@ export const addCourse = async (req, res) => {
       courseThumbnail,
       coursePrice,
       discount,
-      educator: userEmail,
+      educator: email,
     });
 
     // Save to DB

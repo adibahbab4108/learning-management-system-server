@@ -15,16 +15,13 @@ export const addCourse = async (req, res) => {
   const { uid, name, email } = req.user;
 
   try {
-    // Create a new course instance.
-    // We use this way if we need to
-    // modify the fieldname
     const newCourse = new Course({
       courseTitle,
       courseDescription: descriptionHTML,
       courseThumbnail,
       coursePrice,
       discount,
-      educator: email,
+      educator: uid,
     });
 
     // Save to DB

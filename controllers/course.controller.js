@@ -18,7 +18,7 @@ export const getAllCourse = async (req, res) => {
 export const getCourseById = async (req, res) => {
   const { id } = req.params;
   try {
-    const courseData = await Course.findById(id); //issue: educator reference is needed to show along with course, work later
+    const courseData = await Course.findById(id).populate('educator').exec();
 
     //Remove lectureUrl if isPreview is free
     courseData.courseContent.forEach((chapter) => {

@@ -1,15 +1,13 @@
 import mongoose from "mongoose";
 
-const lectureSchema = new mongoose.Schema(
-  {
-    lectureId: { type: String, required: true },
-    lectureTitle: { type: String, required: true },
-    lectureDuration: { type: String, required: true },
-    lectureUrl: { type: String, required: true },
-    isPreviewFree: { type: String, required: true },
-    lectureOrder: { type: Number, required: true },
-  },
-);
+const lectureSchema = new mongoose.Schema({
+  lectureId: { type: String, required: true },
+  lectureTitle: { type: String, required: true },
+  lectureDuration: { type: String, required: true },
+  lectureUrl: { type: String, required: true },
+  isPreviewFree: { type: Boolean, required: true },
+  lectureOrder: { type: Number, required: true },
+});
 
 const chapterSchema = new mongoose.Schema({
   chapterId: { type: String, required: true },
@@ -33,7 +31,7 @@ const courseSchema = new mongoose.Schema(
         rating: { type: Number, min: 1, max: 5 },
       },
     ],
-    educator: { type: String, ref: "User", required: true },
+    educator: { type: String, ref: "User", trim: true, required: true },
     enrolledStudents: [{ type: String, ref: "User" }],
   },
   {

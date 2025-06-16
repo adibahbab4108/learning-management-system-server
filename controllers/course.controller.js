@@ -1,4 +1,5 @@
 import Course from "../models/course.model.js";
+import User from "../models/user.model.js";
 
 //get all courses
 export const getAllCourse = async (req, res) => {
@@ -18,8 +19,8 @@ export const getAllCourse = async (req, res) => {
 export const getCourseById = async (req, res) => {
   const { id } = req.params;
   try {
-    const courseData = await Course.findById(id).populate('educator').exec();
-
+    const courseData = await Course.findById(id).populate('educator');
+    
     //Remove lectureUrl if isPreview is free
     courseData.courseContent.forEach((chapter) => {
       chapter.chapterContent.forEach((lecture) => {

@@ -31,9 +31,6 @@ export const createUser = async (req, res) => {
     };
 
     await User.create(NewUser);
-
-    console.log(email, "\n", req.token);
-
     res
       .status(201)
       .json({ success: true, message: "User registered successfully." });
@@ -86,7 +83,7 @@ export const getUserDetails = async (req, res) => {
         .json({ success: false, message: "User not found" });
     }
 
-    res.status(200).json({ success: true, data: userDetails });
+    res.status(200).json({ success: true, userDetails });
   } catch (error) {
     console.error("Error fetching user details:", error);
     res.status(500).json({ success: false, message: "Internal server error" });

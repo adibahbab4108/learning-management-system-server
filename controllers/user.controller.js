@@ -7,30 +7,24 @@ import { courseProgres } from "../models/courseProgress.model.js";
 export const createUser = async (req, res) => {
   const { uid, name, email, picture } = req.user;
 
-  res.cookie("token", req.token, {
-    httpOnly: true,
-    secure: process.env.NODE_ENV === "production",
-    maxAge: 24 * 60 * 60 * 1000, //need to login again after 1 day
-  });
-  
   try {
-    // Check if user already exists
     const existingUser = await User.findOne({ email });
-    if (existingUser) {
-      return res.json({
-        success: true,
-        message: "user already exists. continue with previous data ",
-      });
+    if (!existingUser) {
+      const NewUser = {
+        _id: uid,
+        name,
+        email,
+        imageUrl: picture,
+      };
+      await User.create(NewUser);
     }
 
-    const NewUser = {
-      _id: uid,
-      name,
-      email,
-      imageUrl: picture,
-    };
+    res.cookie("token", req.token, {
+      httpOnly: true,
+      secure: process.env.NODE_ENV === "production",
+      maxAge: 24 * 60 * 60 * 1000,
+    });
 
-    await User.create(NewUser);
     res
       .status(201)
       .json({ success: true, message: "User registered successfully." });
@@ -158,7 +152,8 @@ export const updateUserCourseProgress = async (req, res) => {
   try {
     const { uid } = req.user;
     const { courseId, lectureId } = req.body;
-    const progressData = await courseProgres.findOne({ uid, courseId });
+    console.log(courseId, uid);
+    const progressData = await courseProgres.findOne({ userId: uid, courseId });
 
     if (progressData) {
       if (progressData.lectureCompleted.includes(lectureId)) {
@@ -167,6 +162,7 @@ export const updateUserCourseProgress = async (req, res) => {
           message: "Lecture already completed",
         });
       }
+
       progressData.lectureCompleted.push(lectureId);
       await progressData.save();
     } else {
@@ -186,7 +182,7 @@ export const getUserCourseProgress = async (req, res) => {
   try {
     const { uid } = req.user;
     const { courseId } = req.body;
-    const progressData = await courseProgres.findOne({ uid, courseId });
+    const progressData = await courseProgres.findOne({ userId: uid, courseId });
 
     res.json({ success: true, progressData });
   } catch (error) {

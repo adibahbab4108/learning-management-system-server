@@ -1,7 +1,6 @@
 import mongoose from "mongoose";
 import User from "../models/user.model.js";
 
-
 //..................................NOT IN USE................................
 
 export const signUp = async (req, res, next) => {
@@ -48,7 +47,12 @@ export const signIn = async (req, res, next) => {
   try {
   } catch (error) {}
 };
+
+//....................................IN USE.........................................
 export const signOut = async (req, res, next) => {
-  try {
-  } catch (error) {}
+  res.clearCookie("token", {
+    httpOnly: true,
+    secure: process.env.NODE_ENV === "production",
+  });
+  res.status(200).json({ success: true, message: "Logged out successfully." });
 };

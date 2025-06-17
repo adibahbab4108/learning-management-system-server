@@ -1,5 +1,4 @@
 import Course from "../models/course.model.js";
-import User from "../models/user.model.js";
 
 //get all courses
 export const getAllCourse = async (req, res) => {
